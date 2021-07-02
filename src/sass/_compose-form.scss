@@ -1,0 +1,51 @@
+.compose-form {
+  width: 100%;
+  padding: 2rem;
+
+  display: flex;
+  flex-direction: column;
+
+  &__textbox-wrapper {
+    flex: 0 0 10rem;
+
+    .compose-box {
+      font-family: inherit;
+      font-size: 1.5rem;
+
+      border: none;
+      width: 100%;
+      height: 100%;
+      resize: none;
+      outline: none;
+      border-top-left-radius: 0.3rem;
+      border-top-right-radius: 0.3rem;
+
+      padding: 1rem;
+    }
+  }
+
+  &__buttons-wrapper {
+    display: flex;
+    align-items: stretch;
+    flex: 1;
+    background-color: #ebebeb;
+    padding: 1rem 1.3rem;
+    border-bottom-left-radius: 0.3rem;
+    border-bottom-right-radius: 0.3rem;
+
+    .character-counter {
+      margin-left: auto;
+      margin-right: 0.9rem;
+      display: flex;
+      align-items: center;
+      color: #606984;
+      font-weight: 600;
+      font-size: 1.5rem;
+    }
+  }
+
+  &__submit-wrapper {
+    display: flex;
+    justify-content: right;
+  }
+}
