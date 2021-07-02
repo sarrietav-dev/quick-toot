@@ -1,0 +1,18 @@
+{
+  "manifest_version": 2,
+  "name": "Quick Toot",
+  "version": "1.0",
+
+  "description": "Allows the user to send a quick toot!",
+  "icons": {
+    "48": "icons/mastodon.svg"
+  },
+
+  "permissions": ["activeTab"],
+
+  "browser_action": {
+    "default_icon": "icons/mastodon.svg",
+    "default_title": "Quick Toot",
+    "default_popup": "index.html"
+  }
+}
