@@ -6,7 +6,6 @@ export const TextBox = (): JSX.Element => {
     <textarea
       placeholder="What's on your mind?"
       name="textarea"
-      id=""
       className="compose-box"
     ></textarea>
   );
