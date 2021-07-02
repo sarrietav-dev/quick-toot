@@ -1,7 +1,9 @@
-import React from 'react'
+import React from 'react';
 
-export const Counter = () => {
-	return (
-		<div className="character-counter"><span>500</span></div>
-	)
-}
+export const Counter = (): JSX.Element => {
+  return (
+    <div className="character-counter">
+      <span>500</span>
+    </div>
+  );
+};
