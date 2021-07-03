@@ -1,26 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { CharCounter } from './components/CharCounter';
+import { ContentWarningBox } from './components/ContentWarningBox';
+import { FormButtons } from './components/FormButtons';
+import { TextBox } from './components/TextBox';
+import './sass/main.scss';
 
-function App() {
+export default function App(): JSX.Element {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <form action="" className="compose-form">
+      <div className="compose-form__content-warning-wrapper">
+        <ContentWarningBox />
+      </div>
+      <div className="compose-form__textbox-wrapper">
+        <TextBox />
+      </div>
+      <div className="compose-form__buttons-wrapper">
+        <FormButtons />
+        <CharCounter />
+      </div>
+      <div className="compose-form__submit-wrapper">
+        <button type="submit" className="btn btn--submit">
+          Toot!
+        </button>
+      </div>
+    </form>
   );
 }
-
-export default App;
