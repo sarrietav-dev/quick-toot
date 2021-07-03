@@ -3,21 +3,18 @@ module.exports = {
   testEnvironment: 'node',
   roots: ['<rootDir>/src'],
   coverageDirectory: 'coverage',
-  testPathIgnorePatterns: ['/node_modules'],
+  testPathIgnorePatterns: ['/node_modules', '/public/'],
   verbose: true,
-  coverageThreshold: {
-    global: {
-      branches: 90,
-      functions: 95,
-      lines: 95,
-      statements: 90,
-    },
-  },
-  collectCoverageFrom: [
-    '**/*.{ts,tsx,js,jsx}',
-    '!**/node_modules/**',
-    '!**/vendor/**',
-  ],
   coveragePathIgnorePatterns: ['/node_modules'],
   coverageReporters: ['json', 'lcov', 'text', 'clover'],
+  transform: { '\\.[jt]sx?$': 'babel-jest' },
+  testMatch: [
+    '<rootDir>/app/**/*.test.{js, jsx}',
+    '<rootDir>/test/**/*.test.js',
+  ],
+  moduleFileExtensions: ['js', 'jsx', 'json', 'node'],
+  setupFilesAfterEnv: [
+    '@testing-library/jest-dom/extend-expect',
+    '@testing-library/react/cleanup-after-each',
+  ],
 };
