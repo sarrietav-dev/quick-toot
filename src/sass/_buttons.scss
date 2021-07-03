@@ -1,0 +1,53 @@
+.btn {
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &--form {
+    margin: 0.3rem;
+    background-color: inherit;
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+    width: 3rem;
+    padding: 0.5rem;
+
+    & > * {
+      font-size: 2rem;
+      line-height: 2rem;
+      color: #51596f;
+    }
+
+    &:hover {
+      background-color: #d6d8dc;
+    }
+
+    &:active {
+      background-color: #cfd1d6;
+    }
+
+    .content-warning {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+  }
+
+  &--submit {
+    padding: 0 1.6rem;
+    margin-top: 1rem;
+    border-radius: 0.3rem;
+    background-color: #2b90d9;
+
+    font-size: 1.4rem;
+    line-height: 3.6rem;
+    text-transform: uppercase;
+    color: #fff;
+    font-weight: 500;
+
+    transition: all 0.2s;
+
+    &:hover {
+      filter: brightness(130%);
+    }
+  }
+}
