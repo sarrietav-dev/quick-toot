@@ -1,7 +1,6 @@
 import { createContext } from 'react';
 
-const contextValue = {
+export default createContext({
   shown: false,
-};
-
-export default createContext(contextValue);
+  toggleWarning: (value: boolean) => {},
+});
