@@ -1,9 +1,11 @@
-import React, { useContext } from 'react';
-import ContentWarningContext from '../context/content-warning.context';
+import React from 'react';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { switchState } from '../store/reducers/content-warning.reducer';
 import { FormButton } from './FormButton';
 
 export const FormButtons = (): JSX.Element => {
-  const { shown, toggleWarning } = useContext(ContentWarningContext);
+  const shown = useAppSelector((state) => state.contentWarning.shown);
+  const dispatch = useAppDispatch();
 
   return (
     <>
@@ -14,7 +16,7 @@ export const FormButtons = (): JSX.Element => {
         className={`btn btn--form ${shown ? 'btn--active' : ''}`}
         onClick={(event) => {
           event.preventDefault();
-          toggleWarning();
+          dispatch(switchState());
         }}
       >
         <span className="content-warning">CW</span>

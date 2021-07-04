@@ -1,17 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { CharCounter } from './components/CharCounter';
 import { ContentWarningBox } from './components/ContentWarningBox';
 import { FormButtons } from './components/FormButtons';
 import { TextBox } from './components/TextBox';
-import ContentWarningContext from './context/content-warning.context';
 import './sass/main.scss';
+import { useAppSelector } from './store/hooks';
 
 export default function App(): JSX.Element {
-  const [shown, setShown] = useState(false);
-
-  const toggleWarning = () => {
-    setShown(!shown);
-  };
+  const shown = useAppSelector((state) => state.contentWarning.shown);
 
   const getCWClassName = () =>
     `compose-form__content-warning-wrapper ${
@@ -19,24 +15,22 @@ export default function App(): JSX.Element {
     } `;
 
   return (
-    <ContentWarningContext.Provider value={{ shown, toggleWarning }}>
-      <form action="" className="compose-form">
-        <div className={getCWClassName()}>
-          <ContentWarningBox />
-        </div>
-        <div className="compose-form__textbox-wrapper">
-          <TextBox />
-        </div>
-        <div className="compose-form__buttons-wrapper">
-          <FormButtons />
-          <CharCounter />
-        </div>
-        <div className="compose-form__submit-wrapper">
-          <button type="submit" className="btn btn--submit">
-            Toot!
-          </button>
-        </div>
-      </form>
-    </ContentWarningContext.Provider>
+    <form action="" className="compose-form">
+      <div className={getCWClassName()}>
+        <ContentWarningBox />
+      </div>
+      <div className="compose-form__textbox-wrapper">
+        <TextBox />
+      </div>
+      <div className="compose-form__buttons-wrapper">
+        <FormButtons />
+        <CharCounter />
+      </div>
+      <div className="compose-form__submit-wrapper">
+        <button type="submit" className="btn btn--submit">
+          Toot!
+        </button>
+      </div>
+    </form>
   );
 }
