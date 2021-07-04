@@ -13,14 +13,15 @@ export default function App(): JSX.Element {
     setShown(!shown);
   };
 
+  const getCWClassName = () =>
+    `compose-form__content-warning-wrapper ${
+      shown ? 'compose-form__content-warning-wrapper--visible' : ''
+    } `;
+
   return (
     <ContentWarningContext.Provider value={{ shown, toggleWarning }}>
       <form action="" className="compose-form">
-        <div
-          className={`compose-form__content-warning-wrapper ${
-            shown ? 'compose-form__content-warning-wrapper--visible' : ''
-          } `}
-        >
+        <div className={getCWClassName()}>
           <ContentWarningBox />
         </div>
         <div className="compose-form__textbox-wrapper">
