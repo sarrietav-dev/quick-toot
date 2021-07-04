@@ -4,6 +4,7 @@
   justify-content: center;
   align-items: center;
   transition: color 0.2s;
+  cursor: pointer;
 
   &--form {
     margin: 0.3rem;
@@ -14,16 +15,21 @@
     padding: 0.5rem;
     color: #51596f;
 
+    &:disabled {
+      color: #a6aec2;
+      cursor: initial;
+    }
+
     & > * {
       font-size: 2rem;
       line-height: 2rem;
     }
 
-    &:hover {
+    &:not(:disabled):hover {
       background-color: #d6d8dc;
     }
 
-    &:active {
+    &:not(:disabled):active {
       background-color: #cfd1d6;
     }
 

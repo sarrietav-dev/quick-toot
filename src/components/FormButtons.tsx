@@ -6,13 +6,13 @@ export const FormButtons = (): JSX.Element => {
 
   return (
     <>
-      <button className="btn btn--form">
+      <button className="btn btn--form" disabled>
         <i className="fa fa-fw fa-paperclip"></i>
       </button>
-      <button className="btn btn--form">
+      <button className="btn btn--form" disabled>
         <i className="fa fa-fw fa-tasks"></i>
       </button>
-      <button className="btn btn--form">
+      <button className="btn btn--form" disabled>
         <i className="fa fa-fw fa-globe"></i>
       </button>
       <button
