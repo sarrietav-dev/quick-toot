@@ -1,6 +1,12 @@
 import { contentWarningSlice } from './reducers/content-warning.reducer';
 import { configureStore } from '@reduxjs/toolkit';
 
+export const reducers = {
+  reducer: {
+    contentWarning: contentWarningSlice.reducer,
+  },
+};
+
 export const store = configureStore({
   reducer: {
     contentWarning: contentWarningSlice.reducer,

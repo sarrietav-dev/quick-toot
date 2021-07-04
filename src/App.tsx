@@ -6,6 +6,10 @@ import { TextBox } from './components/TextBox';
 import './sass/main.scss';
 import { useAppSelector } from './store/hooks';
 
+export const testIds = {
+  contentWarningBoxWrapper: 'content-warning-box-wrapper',
+};
+
 export default function App(): JSX.Element {
   const shown = useAppSelector((state) => state.contentWarning.shown);
 
@@ -16,7 +20,10 @@ export default function App(): JSX.Element {
 
   return (
     <form action="" className="compose-form">
-      <div className={getCWClassName()}>
+      <div
+        className={getCWClassName()}
+        data-testid={testIds.contentWarningBoxWrapper}
+      >
         <ContentWarningBox />
       </div>
       <div className="compose-form__textbox-wrapper">

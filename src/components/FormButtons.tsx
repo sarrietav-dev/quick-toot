@@ -3,6 +3,10 @@ import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { switchState } from '../store/reducers/content-warning.reducer';
 import { FormButton } from './FormButton';
 
+export const testIds = {
+  contentWarningButton: 'content-warning-button',
+};
+
 export const FormButtons = (): JSX.Element => {
   const shown = useAppSelector((state) => state.contentWarning.shown);
   const dispatch = useAppDispatch();
@@ -13,6 +17,7 @@ export const FormButtons = (): JSX.Element => {
       <FormButton icon="tasks" disabled />
       <FormButton icon="globe" disabled />
       <button
+        data-testid={testIds.contentWarningButton}
         className={`btn btn--form ${shown ? 'btn--active' : ''}`}
         onClick={(event) => {
           event.preventDefault();
