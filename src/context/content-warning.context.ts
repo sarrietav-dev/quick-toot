@@ -4,4 +4,4 @@ const contextValue = {
   shown: false,
 };
 
-export default createContext(contextValue)
+export default createContext(contextValue);
