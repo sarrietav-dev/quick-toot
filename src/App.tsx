@@ -9,12 +9,18 @@ import './sass/main.scss';
 export default function App(): JSX.Element {
   const [shown, setShown] = useState(false);
 
+  const toggleWarning = () => {
+    setShown(!shown);
+  };
+
   return (
-    <ContentWarningContext.Provider
-      value={{ shown, toggleWarning: () => setShown(!shown) }}
-    >
+    <ContentWarningContext.Provider value={{ shown, toggleWarning }}>
       <form action="" className="compose-form">
-        <div className="compose-form__content-warning-wrapper">
+        <div
+          className={`compose-form__content-warning-wrapper ${
+            shown ? 'compose-form__content-warning-wrapper--visible' : ''
+          } `}
+        >
           <ContentWarningBox />
         </div>
         <div className="compose-form__textbox-wrapper">

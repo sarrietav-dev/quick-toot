@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import ContentWarningContext from '../context/content-warning.context';
 
 export const FormButtons = (): JSX.Element => {
+  const { shown, toggleWarning } = useContext(ContentWarningContext);
+
   return (
     <>
       <button className="btn btn--form">
@@ -12,7 +15,13 @@ export const FormButtons = (): JSX.Element => {
       <button className="btn btn--form">
         <i className="fa fa-fw fa-globe"></i>
       </button>
-      <button className="btn btn--form">
+      <button
+        className={`btn btn--form ${shown ? 'btn--active' : ''}`}
+        onClick={(event) => {
+          event.preventDefault();
+          toggleWarning();
+        }}
+      >
         <span className="content-warning">CW</span>
       </button>
     </>
