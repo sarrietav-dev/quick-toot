@@ -1,13 +1,12 @@
 import React from 'react';
-import { cleanup, fireEvent, render } from '@testing-library/react';
-import { CharCounter } from '../CharCounter';
+import { cleanup, fireEvent } from '@testing-library/react';
+
 import App from '../../App';
 import { testId as textBoxTestId } from '../TextBox';
 import { testId as charCounterTestId } from '../CharCounter';
+import { render } from '../../test-utils';
 
 afterEach(cleanup);
-
-test('Renders on the dom', () => render(<CharCounter />));
 
 test('Decreases count', () => {
   const { getByTestId } = render(<App />);
@@ -18,7 +17,7 @@ test('Decreases count', () => {
 
   expect(getByTestId(charCounterTestId)).toHaveTextContent(`${500 - 14}`);
   expect(getByTestId(charCounterTestId)).not.toHaveClass(
-    'char-counter--negative',
+    'character-counter--negative',
   );
 });
 
@@ -45,5 +44,7 @@ test('Negative becomes red', () => {
     },
   });
 
-  expect(getByTestId(charCounterTestId)).toHaveClass('char-counter--negative');
+  expect(getByTestId(charCounterTestId)).toHaveClass(
+    'character-counter--negative',
+  );
 });
