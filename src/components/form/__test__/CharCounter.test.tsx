@@ -1,10 +1,11 @@
 import React from 'react';
 import { cleanup, fireEvent } from '@testing-library/react';
 
-import App from '../../App';
+import App from '../../../App';
 import { testId as textBoxTestId } from '../TextBox';
-import { testId as charCounterTestId } from '../form/CharCounter';
-import { render } from '../../test-utils';
+import { testId as charCounterTestId } from '../CharCounter';
+import { render } from '../../../test-utils';
+import 'jest-styled-components';
 
 afterEach(cleanup);
 
@@ -16,9 +17,7 @@ test('Decreases count', () => {
   });
 
   expect(getByTestId(charCounterTestId)).toHaveTextContent(`${500 - 14}`);
-  expect(getByTestId(charCounterTestId)).not.toHaveClass(
-    'character-counter--negative',
-  );
+  expect(getByTestId(charCounterTestId)).toHaveStyleRule('color', '#606984');
 });
 
 test('Decreases count to negative', () => {
@@ -44,7 +43,5 @@ test('Negative becomes red', () => {
     },
   });
 
-  expect(getByTestId(charCounterTestId)).toHaveClass(
-    'character-counter--negative',
-  );
+  expect(getByTestId(charCounterTestId)).toHaveStyleRule('color', '#ff5050');
 });

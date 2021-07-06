@@ -1,9 +1,9 @@
 import React from 'react';
 import { ContentWarningBox, testIds as cwbTestIds } from '../ContentWarningBox';
 import { cleanup, fireEvent } from '@testing-library/react';
-import App from '../../App';
+import App from '../../../App';
 import { testIds as formButtonsTestIds } from '../FormButtons';
-import { render } from '../../test-utils';
+import { render } from '../../../test-utils';
 import 'jest-styled-components';
 
 afterEach(cleanup);
