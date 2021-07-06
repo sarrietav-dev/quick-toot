@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { CharCounter } from './form/CharCounter';
-import { ContentWarningBox } from './form/ContentWarningBox';
-import { FormButtons } from './form/FormButtons';
-import { SubmitButton } from './form/SubmitButton';
-import { TextBox } from './form/TextBox';
+import { CharCounter } from '../components/form/CharCounter';
+import { ContentWarningBox } from '../components/form/ContentWarningBox';
+import { FormButtons } from '../components/form/FormButtons';
+import { SubmitButton } from '../components/form/SubmitButton';
+import { TextBox } from '../components/form/TextBox';
 
 const Form = styled.form`
   width: 100%;
