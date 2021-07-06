@@ -1,11 +1,18 @@
 import React from 'react';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { switchState } from '../store/reducers/content-warning.reducer';
-import { FormButton } from './FormButton';
+import styled from 'styled-components';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { switchState } from '../../store/reducers/content-warning.reducer';
+import { FormButton, StyledFormButton } from './FormButton';
 
 export const testIds = {
   contentWarningButton: 'content-warning-button',
 };
+
+const ContentWarningText = styled.span`
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: currentColor;
+`;
 
 export const FormButtons = (): JSX.Element => {
   const shown = useAppSelector((state) => state.contentWarning.shown);
@@ -16,16 +23,16 @@ export const FormButtons = (): JSX.Element => {
       <FormButton icon="paperclip" disabled />
       <FormButton icon="tasks" disabled />
       <FormButton icon="globe" disabled />
-      <button
+      <StyledFormButton
         data-testid={testIds.contentWarningButton}
-        className={`btn btn--form ${shown ? 'btn--active' : ''}`}
+        active={shown}
         onClick={(event) => {
           event.preventDefault();
           dispatch(switchState());
         }}
       >
-        <span className="content-warning">CW</span>
-      </button>
+        <ContentWarningText>CW</ContentWarningText>
+      </StyledFormButton>
     </>
   );
 };

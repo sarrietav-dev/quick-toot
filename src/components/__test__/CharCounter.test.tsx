@@ -3,7 +3,7 @@ import { cleanup, fireEvent } from '@testing-library/react';
 
 import App from '../../App';
 import { testId as textBoxTestId } from '../TextBox';
-import { testId as charCounterTestId } from '../CharCounter';
+import { testId as charCounterTestId } from '../form/CharCounter';
 import { render } from '../../test-utils';
 
 afterEach(cleanup);
