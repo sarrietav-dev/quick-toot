@@ -41,11 +41,16 @@ const Input = styled.input`
   padding: 1rem 2rem;
   background-color: ${(props) => props.theme.colors.inputs.bgDark};
   color: #fff;
-  outline-color: ${(props) => props.theme.colors.primary};
 
-  &:invalid,
-  &:required {
-    outline-color: ${(props) => props.theme.colors.errorRed};
+  &:focus {
+    &:invalid,
+    &:required {
+      outline: ${(props) => props.theme.colors.errorRed} solid 0.2rem;
+    }
+
+    &:valid {
+      outline: ${(props) => props.theme.colors.successGreen} solid 0.2rem;
+    }
   }
 
   &::placeholder {
@@ -63,21 +68,26 @@ export const Auth = (): JSX.Element => {
   const history = useHistory();
 
   const handleOnClick = async () => {
-    await dispatch(createMastodonApp());
-    await dispatch(authorizeUser());
-    await dispatch(obtainToken());
-    history.push('/');
+    //await dispatch(createMastodonApp());
+    //await dispatch(authorizeUser());
+    //await dispatch(obtainToken());
+    //history.push('/');
   };
 
   return (
     <Wrapper>
       <HighlightedFormBox>
         <h2>Please enter your instance address</h2>
-        <Input type="text" placeholder="mastodon.example" ref={ref} required />
+        <Input
+          type="text"
+          placeholder="mastodon.example"
+          ref={ref}
+          required
+          pattern=".+\..+"
+        />
         <AuthButton
           type="submit"
           onClick={(event) => {
-            event.preventDefault();
             handleOnClick();
           }}
         >

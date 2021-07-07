@@ -4,7 +4,7 @@ export const theme = {
     classicprimarycolor: '#9baec8',
     classicSecondaryColor: '#d9e1e8',
     baseColor: '#282c37',
-    successgreen: '#79bd9a',
+    successGreen: '#79bd9a',
     errorRed: '#df405a',
     warningRed: '#ff5050',
     text: {
