@@ -3,9 +3,10 @@ import { AuthCacheKeys } from '../../utils/CacheKeys';
 
 export const createMastodonApp = createAsyncThunk(
   'credentials/createMastodonApp',
-  async () => {
+  async (instance: string) => {
     await setTimeout(() => console.log('Creating App'), 1000);
     return {
+      instance,
       name: 'Test',
       client_id: '1234567890',
       client_secret: '0987654321',
@@ -84,6 +85,7 @@ const CredentialsSlice = createSlice({
         state.clientId = action.payload.client_id;
         state.clientSecret = action.payload.client_secret;
 
+        localStorage.setItem(AuthCacheKeys.Instance, action.payload.instance);
         localStorage.setItem(AuthCacheKeys.ClientId, state.clientId);
         localStorage.setItem(AuthCacheKeys.ClientSecret, state.clientSecret);
       })
@@ -105,6 +107,10 @@ const CredentialsSlice = createSlice({
   },
 });
 
-export const { revokeAccessToken, setAccessToken, setClientCredentials, setAuthCode } =
-  CredentialsSlice.actions;
+export const {
+  revokeAccessToken,
+  setAccessToken,
+  setClientCredentials,
+  setAuthCode,
+} = CredentialsSlice.actions;
 export default CredentialsSlice.reducer;

@@ -3,4 +3,5 @@ export enum AuthCacheKeys {
   ClientSecret = 'client_secret',
   AuthCode = 'auth_code',
   AccessToken = 'access_token',
+  Instance = "instance_name",
 }

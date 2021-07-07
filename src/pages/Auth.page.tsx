@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { PrimaryButton } from '../components/styled-components/buttons';
@@ -8,6 +8,7 @@ import {
   createMastodonApp,
   obtainToken,
 } from '../store/reducers/credentials.reducer';
+import { useForm } from 'react-hook-form';
 
 const Wrapper = styled.div`
   display: flex;
@@ -62,37 +63,36 @@ const AuthButton = styled(PrimaryButton)`
   text-align: center;
 `;
 
+interface FormData {
+  instance: string;
+}
+
 export const Auth = (): JSX.Element => {
-  const ref = useRef<HTMLInputElement>(null);
   const dispatch = useAppDispatch();
   const history = useHistory();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>();
 
-  const handleOnClick = async () => {
-    //await dispatch(createMastodonApp());
-    //await dispatch(authorizeUser());
-    //await dispatch(obtainToken());
-    //history.push('/');
-  };
+  const onSubmit = handleSubmit(async (data) => {
+    await dispatch(createMastodonApp(data.instance));
+  });
 
   return (
     <Wrapper>
-      <HighlightedFormBox>
+      <HighlightedFormBox onSubmit={onSubmit}>
         <h2>Please enter your instance address</h2>
         <Input
           type="text"
           placeholder="mastodon.example"
-          ref={ref}
           required
+          title="Enter a correct instance name"
           pattern=".+\..+"
+          {...register('instance', { required: true, pattern: /.+\..+/ })}
         />
-        <AuthButton
-          type="submit"
-          onClick={(event) => {
-            handleOnClick();
-          }}
-        >
-          Authorize
-        </AuthButton>
+        <AuthButton type="submit">Authorize</AuthButton>
       </HighlightedFormBox>
     </Wrapper>
   );
