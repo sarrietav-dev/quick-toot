@@ -15,11 +15,6 @@ export const FormButton = styled(Button)`
     cursor: initial;
   }
 
-  & > * {
-    font-size: 2rem;
-    line-height: 2rem;
-  }
-
   &:not(:disabled):hover {
     background-color: #d6d8dc;
   }

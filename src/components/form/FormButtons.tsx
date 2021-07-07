@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { switchState } from '../../store/reducers/content-warning.reducer';
 import { FormButton } from './FormButton';
+import { Icon } from './Icon.styled';
 
 export const testIds = {
   contentWarningButton: 'content-warning-button',
@@ -21,13 +22,13 @@ export const FormButtons = (): JSX.Element => {
   return (
     <>
       <FormButton disabled>
-        <i className="fa fa-paperclip" />
+        <Icon className="fa fa-paperclip" />
       </FormButton>
       <FormButton disabled>
-        <i className="fa fa-tasks" />
+        <Icon className="fa fa-tasks" />
       </FormButton>
       <FormButton disabled>
-        <i className="fa fa-globe" />
+        <Icon className="fa fa-globe" />
       </FormButton>
       <FormButton
         data-testid={testIds.contentWarningButton}
