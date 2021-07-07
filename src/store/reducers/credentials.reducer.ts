@@ -100,6 +100,7 @@ const CredentialsSlice = createSlice({
         localStorage.setItem(AuthCacheKeys.AccessToken, state.accessToken);
       })
       .addCase(revokeToken.fulfilled, (state) => {
+        state.authorizationCode = '';
         state.accessToken = '';
 
         localStorage.removeItem(AuthCacheKeys.AccessToken);
