@@ -78,6 +78,8 @@ export const Auth = (): JSX.Element => {
 
   const onSubmit = handleSubmit(async (data) => {
     await dispatch(createMastodonApp(data.instance));
+    await dispatch(obtainToken());
+    history.push("/");
   });
 
   return (
