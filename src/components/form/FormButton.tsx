@@ -1,13 +1,7 @@
-import React from 'react';
 import styled from 'styled-components';
 import { Button } from '../styled-components/buttons';
 
-interface FormButtonProps {
-  icon: 'globe' | 'paperclip' | 'tasks';
-  disabled: boolean;
-}
-
-export const StyledFormButton = styled(Button)`
+export const FormButton = styled(Button)`
   margin: 0.3rem;
   background-color: inherit;
   border-radius: 0.5rem;
@@ -34,14 +28,3 @@ export const StyledFormButton = styled(Button)`
     background-color: #cfd1d6;
   }
 `;
-
-export const FormButton = ({
-  icon,
-  disabled,
-}: FormButtonProps): JSX.Element => {
-  return (
-    <StyledFormButton disabled={disabled}>
-      <i className={`fa fa-fw fa-${icon}`}></i>
-    </StyledFormButton>
-  );
-};

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { switchState } from '../../store/reducers/content-warning.reducer';
-import { FormButton, StyledFormButton } from './FormButton';
+import { FormButton } from './FormButton';
 
 export const testIds = {
   contentWarningButton: 'content-warning-button',
@@ -20,10 +20,16 @@ export const FormButtons = (): JSX.Element => {
 
   return (
     <>
-      <FormButton icon="paperclip" disabled />
-      <FormButton icon="tasks" disabled />
-      <FormButton icon="globe" disabled />
-      <StyledFormButton
+      <FormButton disabled>
+        <i className="fa fa-paperclip" />
+      </FormButton>
+      <FormButton disabled>
+        <i className="fa fa-tasks" />
+      </FormButton>
+      <FormButton disabled>
+        <i className="fa fa-globe" />
+      </FormButton>
+      <FormButton
         data-testid={testIds.contentWarningButton}
         active={shown}
         onClick={(event) => {
@@ -32,7 +38,7 @@ export const FormButtons = (): JSX.Element => {
         }}
       >
         <ContentWarningText>CW</ContentWarningText>
-      </StyledFormButton>
+      </FormButton>
     </>
   );
 };
