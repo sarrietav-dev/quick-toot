@@ -1,4 +1,45 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AuthCacheKeys } from '../../utils/CacheKeys';
+
+export const createMastodonApp = createAsyncThunk(
+  'credentials/createMastodonApp',
+  async () => {
+    await setTimeout(() => console.log('Creating App'), 1000);
+    return {
+      name: 'Test',
+      client_id: '1234567890',
+      client_secret: '0987654321',
+    };
+  },
+);
+
+export const authorizeUser = createAsyncThunk(
+  'credentials/authorizeUser',
+  async () => {
+    await setTimeout(() => console.log('Authorizing User'), 1000);
+    return {
+      code: '1234567890',
+    };
+  },
+);
+
+export const obtainToken = createAsyncThunk(
+  'credentials/obtainToken',
+  async () => {
+    await setTimeout(() => console.log('Fetching token'), 1000);
+    return {
+      access_token: 'ZA-Yj3aBD8U8Cm7lKUp-lm9O9BmDgdhHzDeqsY8tlL0',
+    };
+  },
+);
+
+export const revokeToken = createAsyncThunk(
+  'credentials/revokeToken',
+  async () => {
+    await setTimeout(() => console.log('Fetching token'), 1000);
+    return {};
+  },
+);
 
 interface CredentialsState {
   clientId: string;
@@ -16,61 +57,6 @@ const initialState: CredentialsState = {
   accessToken: '',
 };
 
-enum AuthCacheKeys {
-  ClientId = 'client_id',
-  ClientSecret = 'client_secret',
-  AuthCode = 'auth_code',
-  AccessToken = 'access_token',
-}
-
-const createMastodonApp = createAsyncThunk(
-  'credentials/createMastodonApp',
-  async () => {
-    const clientId = localStorage.getItem(AuthCacheKeys.ClientId);
-    const clientSecret = localStorage.getItem(AuthCacheKeys.ClientSecret);
-
-    if (clientId && clientSecret)
-      return { client_id: clientId, client_secret: clientSecret, name: '' };
-
-    await setTimeout(() => console.log('Creating App'), 1000);
-    return {
-      name: 'Test',
-      client_id: '1234567890',
-      client_secret: '0987654321',
-    };
-  },
-);
-
-const authorizeUser = createAsyncThunk(
-  'credentials/authorizeUser',
-  async () => {
-    const authKey = localStorage.getItem(AuthCacheKeys.AuthCode);
-
-    if (authKey) return { code: authKey };
-
-    await setTimeout(() => console.log('Authorizing User'), 1000);
-    return {
-      code: '1234567890',
-    };
-  },
-);
-
-const obtainToken = createAsyncThunk('credentials/obtainToken', async () => {
-  const accessToken = localStorage.getItem(AuthCacheKeys.AccessToken);
-
-  if (accessToken) return { access_token: accessToken };
-
-  await setTimeout(() => console.log('Fetching token'), 1000);
-  return {
-    access_token: 'ZA-Yj3aBD8U8Cm7lKUp-lm9O9BmDgdhHzDeqsY8tlL0',
-  };
-});
-
-const revokeToken = createAsyncThunk('credentials/revokeToken', async () => {
-  await setTimeout(() => console.log('Fetching token'), 1000);
-  return {};
-});
-
 const CredentialsSlice = createSlice({
   name: 'credentials',
   initialState,
@@ -81,6 +67,9 @@ const CredentialsSlice = createSlice({
     ) {
       state.clientId = action.payload.clientId;
       state.clientSecret = action.payload.clientSecret;
+    },
+    setAuthCode(state, action: PayloadAction<string>) {
+      state.authorizationCode = action.payload;
     },
     setAccessToken(state, action: PayloadAction<string>) {
       state.accessToken = action.payload;
@@ -116,6 +105,6 @@ const CredentialsSlice = createSlice({
   },
 });
 
-export const { revokeAccessToken, setAccessToken, setClientCredentials } =
+export const { revokeAccessToken, setAccessToken, setClientCredentials, setAuthCode } =
   CredentialsSlice.actions;
 export default CredentialsSlice.reducer;

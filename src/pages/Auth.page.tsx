@@ -1,6 +1,13 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { PrimaryButton } from '../components/styled-components/buttons';
+import { useAppDispatch } from '../store/hooks';
+import {
+  authorizeUser,
+  createMastodonApp,
+  obtainToken,
+} from '../store/reducers/credentials.reducer';
 
 const Wrapper = styled.div`
   display: flex;
@@ -50,13 +57,32 @@ const AuthButton = styled(PrimaryButton)`
   text-align: center;
 `;
 
-export const Auth = () => {
+export const Auth = (): JSX.Element => {
+  const ref = useRef<HTMLInputElement>(null);
+  const dispatch = useAppDispatch();
+  const history = useHistory();
+
+  const handleOnClick = async () => {
+    await dispatch(createMastodonApp());
+    await dispatch(authorizeUser());
+    await dispatch(obtainToken());
+    history.push('/');
+  };
+
   return (
     <Wrapper>
       <HighlightedFormBox>
         <h2>Please enter your instance address</h2>
-        <Input type="text" placeholder="mastodon.example" required />
-        <AuthButton type="submit">Authorize</AuthButton>
+        <Input type="text" placeholder="mastodon.example" ref={ref} required />
+        <AuthButton
+          type="submit"
+          onClick={(event) => {
+            event.preventDefault();
+            handleOnClick();
+          }}
+        >
+          Authorize
+        </AuthButton>
       </HighlightedFormBox>
     </Wrapper>
   );

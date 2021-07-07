@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import { useAppSelector } from '../store/hooks';
+import { checkAppCreated, checkUserToken } from '../utils/authCacheCheckers';
 
 interface ProtectedRoute {
   component: React.ElementType;
@@ -15,15 +15,14 @@ export const ProtectedRoute = ({
   component: Component,
   ...rest
 }: ProtectedRoute): JSX.Element => {
-  const { accessToken } = useAppSelector((state) => state.credentials);
-
   return (
     <Route
       path={path}
       exact={exact}
       {...rest}
       render={(props) => {
-        if (accessToken) return <Component {...props} />;
+        if (checkAppCreated() && checkUserToken())
+          return <Component {...props} />;
         return <Redirect to={{ pathname: '/auth', state: props.location }} />;
       }}
     />
