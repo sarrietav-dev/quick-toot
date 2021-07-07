@@ -23,53 +23,6 @@ enum AuthCacheKeys {
   AccessToken = 'access_token',
 }
 
-const CredentialsSlice = createSlice({
-  name: 'credentials',
-  initialState,
-  reducers: {
-    setClientCredentials(
-      state,
-      action: PayloadAction<{ clientId: string; clientSecret: string }>,
-    ) {
-      state.clientId = action.payload.clientId;
-      state.clientSecret = action.payload.clientSecret;
-    },
-    setAccessToken(state, action: PayloadAction<string>) {
-      state.accessToken = action.payload;
-    },
-    revokeAccessToken(state) {
-      state.accessToken = '';
-    },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(createMastodonApp.fulfilled, (state, action) => {
-      state.clientId = action.payload.client_id;
-      state.clientSecret = action.payload.client_secret;
-
-      localStorage.setItem(AuthCacheKeys.ClientId, state.clientId);
-      localStorage.setItem(AuthCacheKeys.ClientSecret, state.clientSecret);
-    });
-
-    builder.addCase(authorizeUser.fulfilled, (state, action) => {
-      state.authorizationCode = action.payload.code;
-
-      localStorage.setItem(AuthCacheKeys.AuthCode, state.authorizationCode);
-    });
-
-    builder.addCase(obtainToken.fulfilled, (state, action) => {
-      state.accessToken = action.payload.access_token;
-
-      localStorage.setItem(AuthCacheKeys.AccessToken, state.accessToken);
-    });
-
-    builder.addCase(revokeToken.fulfilled, (state) => {
-      state.accessToken = '';
-
-      localStorage.removeItem(AuthCacheKeys.AccessToken);
-    });
-  },
-});
-
 const createMastodonApp = createAsyncThunk(
   'credentials/createMastodonApp',
   async () => {
@@ -116,6 +69,51 @@ const obtainToken = createAsyncThunk('credentials/obtainToken', async () => {
 const revokeToken = createAsyncThunk('credentials/revokeToken', async () => {
   await setTimeout(() => console.log('Fetching token'), 1000);
   return {};
+});
+
+const CredentialsSlice = createSlice({
+  name: 'credentials',
+  initialState,
+  reducers: {
+    setClientCredentials(
+      state,
+      action: PayloadAction<{ clientId: string; clientSecret: string }>,
+    ) {
+      state.clientId = action.payload.clientId;
+      state.clientSecret = action.payload.clientSecret;
+    },
+    setAccessToken(state, action: PayloadAction<string>) {
+      state.accessToken = action.payload;
+    },
+    revokeAccessToken(state) {
+      state.accessToken = '';
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(createMastodonApp.fulfilled, (state, action) => {
+        state.clientId = action.payload.client_id;
+        state.clientSecret = action.payload.client_secret;
+
+        localStorage.setItem(AuthCacheKeys.ClientId, state.clientId);
+        localStorage.setItem(AuthCacheKeys.ClientSecret, state.clientSecret);
+      })
+      .addCase(authorizeUser.fulfilled, (state, action) => {
+        state.authorizationCode = action.payload.code;
+
+        localStorage.setItem(AuthCacheKeys.AuthCode, state.authorizationCode);
+      })
+      .addCase(obtainToken.fulfilled, (state, action) => {
+        state.accessToken = action.payload.access_token;
+
+        localStorage.setItem(AuthCacheKeys.AccessToken, state.accessToken);
+      })
+      .addCase(revokeToken.fulfilled, (state) => {
+        state.accessToken = '';
+
+        localStorage.removeItem(AuthCacheKeys.AccessToken);
+      });
+  },
 });
 
 export const { revokeAccessToken, setAccessToken, setClientCredentials } =
