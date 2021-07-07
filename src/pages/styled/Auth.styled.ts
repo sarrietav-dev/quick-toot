@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { PrimaryButton } from "../../components/styled-components/buttons";
+import { PrimaryButton } from "../../components/abstract-styled/buttons";
 
 export const AuthWrapper = styled.div`
   display: flex;

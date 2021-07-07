@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Button } from '../../styled-components/buttons';
+import { Button } from '../../abstract-styled/buttons';
 
 export const FormButton = styled(Button)`
   margin: 0.3rem;
