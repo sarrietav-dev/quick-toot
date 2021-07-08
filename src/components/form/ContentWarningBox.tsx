@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React, { useContext } from 'react';
-import { Controller } from 'react-hook-form';
 import { FormContext } from '../../pages/ComposeForm.page';
 
 import { useAppSelector } from '../../store/hooks';

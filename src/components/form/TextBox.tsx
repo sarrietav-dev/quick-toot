@@ -1,5 +1,6 @@
-import React, { ChangeEvent, useContext, useState } from 'react';
-import { Controller, useController } from 'react-hook-form';
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import React, { ChangeEvent, useContext } from 'react';
+import { Controller } from 'react-hook-form';
 import { FormContext } from '../../pages/ComposeForm.page';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { changeCount } from '../../store/reducers/char-counter.reducer';
