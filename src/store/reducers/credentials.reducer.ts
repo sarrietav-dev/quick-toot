@@ -1,58 +1,28 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AuthCacheKeys } from '../../utils/CacheKeys';
-
-export const createMastodonApp = createAsyncThunk(
-  'credentials/createMastodonApp',
-  async (instance: string) => {
-    await setTimeout(() => console.log('Creating App'), 1000);
-    return {
-      instance,
-      name: 'Test',
-      client_id: '1234567890',
-      client_secret: '0987654321',
-    };
-  },
-);
-
-export const authorizeUser = createAsyncThunk(
-  'credentials/authorizeUser',
-  async () => {
-    await setTimeout(() => console.log('Authorizing User'), 1000);
-    return {
-      code: '1234567890',
-    };
-  },
-);
-
-export const obtainToken = createAsyncThunk(
-  'credentials/obtainToken',
-  async () => {
-    await setTimeout(() => console.log('Fetching token'), 1000);
-    return {
-      access_token: 'ZA-Yj3aBD8U8Cm7lKUp-lm9O9BmDgdhHzDeqsY8tlL0',
-    };
-  },
-);
-
-export const revokeToken = createAsyncThunk(
-  'credentials/revokeToken',
-  async () => {
-    await setTimeout(() => console.log('Fetching token'), 1000);
-    return {};
-  },
-);
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+  authorizeUser,
+  createMastodonApp,
+  obtainToken,
+  revokeToken,
+} from './credentials.thunks';
 
 interface CredentialsState {
-  clientId: string;
-  clientSecret: string;
+  instanceName: string;
+  clientCredentials: {
+    clientId: string;
+    clientSecret: string;
+  };
   redirectUri: string;
   authorizationCode: string;
   accessToken: string;
 }
 
 const initialState: CredentialsState = {
-  clientId: '',
-  clientSecret: '',
+  instanceName: '',
+  clientCredentials: {
+    clientId: '',
+    clientSecret: '',
+  },
   redirectUri: '',
   authorizationCode: '',
   accessToken: '',
@@ -66,8 +36,8 @@ const CredentialsSlice = createSlice({
       state,
       action: PayloadAction<{ clientId: string; clientSecret: string }>,
     ) {
-      state.clientId = action.payload.clientId;
-      state.clientSecret = action.payload.clientSecret;
+      state.clientCredentials.clientId = action.payload.clientId;
+      state.clientCredentials.clientSecret = action.payload.clientSecret;
     },
     setAuthCode(state, action: PayloadAction<string>) {
       state.authorizationCode = action.payload;
@@ -82,12 +52,17 @@ const CredentialsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(createMastodonApp.fulfilled, (state, action) => {
-        state.clientId = action.payload.client_id;
-        state.clientSecret = action.payload.client_secret;
+        const { client_id, instance, client_secret, client_name } =
+          action.payload;
+        state.clientCredentials.clientId = client_id;
+        state.clientCredentials.clientSecret = client_secret;
+        state.instanceName = instance;
 
-        localStorage.setItem(AuthCacheKeys.Instance, action.payload.instance);
-        localStorage.setItem(AuthCacheKeys.ClientId, state.clientId);
-        localStorage.setItem(AuthCacheKeys.ClientSecret, state.clientSecret);
+        localStorage.setItem(AuthCacheKeys.InstanceName, instance);
+        localStorage.setItem(
+          AuthCacheKeys.ClientCredentials,
+          JSON.stringify({ client_name, client_id, client_secret }),
+        );
       })
       .addCase(authorizeUser.fulfilled, (state, action) => {
         state.authorizationCode = action.payload.code;

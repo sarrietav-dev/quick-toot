@@ -6,7 +6,7 @@ import {
   authorizeUser,
   createMastodonApp,
   obtainToken,
-} from '../store/reducers/credentials.reducer';
+} from '../store/reducers/credentials.thunks';
 import { useForm } from 'react-hook-form';
 import {
   AuthWrapper,

@@ -1,10 +1,14 @@
-import { AuthCacheKeys } from './CacheKeys';
-
 export const checkAppCreated = (): boolean => {
-  const clientId = localStorage.getItem(AuthCacheKeys.ClientId);
-  const clientSecret = localStorage.getItem(AuthCacheKeys.ClientSecret);
+  const clientCredentials = localStorage.getItem(
+    AuthCacheKeys.ClientCredentials,
+  );
+  if (clientCredentials === null) return false;
 
-  return clientId !== null && clientSecret !== null;
+  const { client_id, client_secret } = JSON.parse(
+    clientCredentials,
+  ) as ClientCredentials;
+
+  return client_id !== null && client_secret !== null;
 };
 
 export const checkUserAuthenticated = (): boolean => {
