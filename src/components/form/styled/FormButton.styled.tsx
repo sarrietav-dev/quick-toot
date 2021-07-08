@@ -8,7 +8,7 @@ export const FormButton = styled(Button)`
   transition: all 0.2s;
   width: 3rem;
   padding: 0.5rem;
-  color: #51596f;
+  color: ${(props) => (props.active ? '#2b90d9' : '#51596f')};
 
   &:disabled {
     color: #a6aec2;

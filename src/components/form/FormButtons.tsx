@@ -11,7 +11,7 @@ export const testIds = {
 };
 
 export const FormButtons = (): JSX.Element => {
-  const shown = useAppSelector((state) => state.contentWarning.shown);
+  const { shown } = useAppSelector((state) => state.contentWarning);
   const dispatch = useAppDispatch();
 
   return (
