@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { Controller } from 'react-hook-form';
+import { FormContext } from '../../pages/ComposeForm.page';
 
 import { useAppSelector } from '../../store/hooks';
 import {
@@ -13,6 +15,7 @@ export const testIds = {
 
 export const ContentWarningBox = (): JSX.Element => {
   const shown = useAppSelector((state) => state.contentWarning.shown);
+  const { register } = useContext(FormContext)!;
 
   return (
     <ContentWarningBoxWrapper
@@ -23,6 +26,7 @@ export const ContentWarningBox = (): JSX.Element => {
         data-testid={testIds.contentWarningBox}
         type="text"
         placeholder="Write your warning here"
+        {...register('spoilerText')}
       />
     </ContentWarningBoxWrapper>
   );
