@@ -16,7 +16,7 @@ export class MastodonApi {
     this.instanceApiUrl = `https://${instance}`;
     this.clientCredentials = await this.getClientCredentials();
     this.authCode = this.getAuthCode() ?? '';
-    this.accessToken = await this.getAccessToken();
+    if (this.authCode !== '') this.accessToken = await this.getAccessToken();
   };
 
   private getClientCredentials = async (): Promise<ClientCredentials> => {
@@ -33,6 +33,14 @@ export class MastodonApi {
       );
       // TODO: Handle errors
       const { client_id, client_secret, name } = response.data;
+
+      // Save credentials to local storage
+      ApiCacheStore.clientCredentials = {
+        client_id,
+        client_secret,
+        client_name: name,
+      };
+
       return {
         client_id,
         client_secret,
@@ -42,6 +50,9 @@ export class MastodonApi {
   };
 
   setAuthCode(authCode: string): void {
+    // Save credentials to local storage
+    ApiCacheStore.authCode = authCode;
+
     this.authCode = authCode;
   }
 
@@ -75,7 +86,12 @@ export class MastodonApi {
         },
       );
       // TODO: Handle errors
+
       const { access_token } = response.data;
+
+      // Save credentials to local storage
+      ApiCacheStore.accessToken = access_token;
+
       return access_token;
     }
   };
