@@ -19,14 +19,10 @@ interface FormData {
   instance: string;
 }
 
-export const Auth = (): JSX.Element => {
+export const InstanceNamePage = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const history = useHistory();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>();
+  const { register, handleSubmit } = useForm<FormData>();
 
   const onSubmit = handleSubmit(async (data) => {
     await dispatch(createMastodonApp(data.instance));
