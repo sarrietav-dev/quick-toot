@@ -41,6 +41,8 @@ const CredentialsSlice = createSlice({
     },
     setAuthCode(state, action: PayloadAction<string>) {
       state.authorizationCode = action.payload;
+
+      localStorage.setItem(AuthCacheKeys.AuthCode, state.authorizationCode);
     },
     setAccessToken(state, action: PayloadAction<string>) {
       state.accessToken = action.payload;

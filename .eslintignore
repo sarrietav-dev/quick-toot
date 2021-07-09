@@ -1,0 +1,5 @@
+/build
+/node_modules
+/public
+babel.config.js
+/src/reportWebVitals.ts

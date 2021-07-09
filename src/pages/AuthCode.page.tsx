@@ -1,8 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-
 import { useAppDispatch } from '../store/hooks';
-import { createMastodonApp } from '../store/reducers/credentials.thunks';
 import { useForm } from 'react-hook-form';
 import {
   Wrapper,
@@ -10,35 +8,36 @@ import {
   HighlightedFormBox,
   Input,
 } from './styled/Auth.styled';
+import { setAuthCode } from '../store/reducers/credentials.reducer';
 
 interface FormData {
-  instance: string;
+  authCode: string;
 }
 
-export const InstanceNamePage = (): JSX.Element => {
+export const AuthCode = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const history = useHistory();
   const { register, handleSubmit } = useForm<FormData>();
 
-  // TODO: Validate instance name is correct sending the auth request.
-  const onSubmit = handleSubmit(async (data) => {
-    await dispatch(createMastodonApp(data.instance));
-    history.push('/auth-code');
-  });
+  // TODO: Validate the auth code by sending the token request.
+  const onSubmit = () =>
+    handleSubmit((data) => {
+      dispatch(setAuthCode(data.authCode));
+      history.push('/');
+    });
 
   return (
     <Wrapper>
       <HighlightedFormBox onSubmit={onSubmit}>
-        <h2>Please enter your instance address</h2>
+        <h2>Place paste the authentication code here</h2>
         <Input
           type="text"
-          placeholder="mastodon.example"
+          placeholder="Paste your code here"
           required
           title="Enter a correct instance name"
-          pattern=".+\..+"
-          {...register('instance', { required: true, pattern: /.+\..+/ })}
+          {...register('authCode', { required: true })}
         />
-        <AuthButton type="submit">Next</AuthButton>
+        <AuthButton type="submit">Authorize</AuthButton>
       </HighlightedFormBox>
     </Wrapper>
   );

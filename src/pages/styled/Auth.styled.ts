@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { PrimaryButton } from "../../components/abstract-styled/buttons";
 
-export const AuthWrapper = styled.div`
+export const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
