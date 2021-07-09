@@ -1,3 +1,4 @@
+import { ClientCredentials, AuthCacheKeys } from './../../types/types.d';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const createMastodonApp = createAsyncThunk(

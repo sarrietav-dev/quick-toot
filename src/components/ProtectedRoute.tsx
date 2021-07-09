@@ -6,7 +6,7 @@ interface ProtectedRoute {
   component: React.ElementType;
   path: string;
   exact: boolean;
-  condition: boolean;
+  condition: () => boolean;
   redirectionPath: string;
 }
 
@@ -24,7 +24,7 @@ export const ProtectedRoute = ({
       exact={exact}
       {...rest}
       render={(props) => {
-        if (condition) return <Component {...props} />;
+        if (condition()) return <Component {...props} />;
         return (
           <Redirect to={{ pathname: redirectionPath, state: props.location }} />
         );

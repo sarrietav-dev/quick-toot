@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FormEvent } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useAppDispatch } from '../store/hooks';
 import { useForm } from 'react-hook-form';
@@ -9,6 +9,7 @@ import {
   Input,
 } from './styled/Auth.styled';
 import { setAuthCode } from '../store/reducers/credentials.reducer';
+import { obtainToken } from '../store/reducers/credentials.thunks';
 
 interface FormData {
   authCode: string;
@@ -20,11 +21,11 @@ export const AuthCode = (): JSX.Element => {
   const { register, handleSubmit } = useForm<FormData>();
 
   // TODO: Validate the auth code by sending the token request.
-  const onSubmit = () =>
-    handleSubmit((data) => {
-      dispatch(setAuthCode(data.authCode));
-      history.push('/');
-    });
+  const onSubmit = handleSubmit((data) => {
+    dispatch(setAuthCode(data.authCode));
+    dispatch(obtainToken());
+    history.replace('/');
+  });
 
   return (
     <Wrapper>

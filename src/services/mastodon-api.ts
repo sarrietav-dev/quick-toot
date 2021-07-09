@@ -1,3 +1,8 @@
+import { AuthCacheKeys, ClientCredentials } from './../types/types.d';
+import {
+  MastodonTokenResponse,
+  MastodonApplication,
+} from './../types/mastodon-api-types.d';
 import axios from 'axios';
 
 export class MastodonApi {

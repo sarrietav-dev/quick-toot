@@ -21,9 +21,10 @@ export const InstanceNamePage = (): JSX.Element => {
   const { register, handleSubmit } = useForm<FormData>();
 
   // TODO: Validate instance name is correct sending the auth request.
-  const onSubmit = handleSubmit(async (data) => {
-    await dispatch(createMastodonApp(data.instance));
-    history.push('/auth-code');
+  const onSubmit = handleSubmit((data) => {
+    dispatch(createMastodonApp(data.instance)).then(() =>
+      history.replace('/auth-code'),
+    );
   });
 
   return (

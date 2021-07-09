@@ -1,3 +1,4 @@
+import { AuthCacheKeys } from './../../types/types.d';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   authorizeUser,
