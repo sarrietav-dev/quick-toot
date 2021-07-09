@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useAppDispatch } from '../../store/hooks';
-import { revokeToken } from '../../store/reducers/credentials.reducer';
+import { revokeToken } from '../../store/reducers/credentials.thunks';
 import { PrimaryButton } from '../abstract-styled/buttons';
 import { Icon } from './styled/Icon.styled';
 import { SubmitButtonWrapper } from './styled/SubmitButton.styled';

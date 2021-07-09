@@ -1,4 +1,4 @@
-interface MastodonApplication {
+export interface MastodonApplication {
   id?: string;
   name: string;
   website?: string;
@@ -9,7 +9,7 @@ interface MastodonApplication {
   error?: string;
 }
 
-interface MastodonTokenResponse {
+export interface MastodonTokenResponse {
   access_token: string;
   token_type: string;
   scope: string;

@@ -1,3 +1,5 @@
+import { AuthCacheKeys, ClientCredentials } from '../types/types.d';
+
 export const checkAppCreated = (): boolean => {
   const clientCredentials = localStorage.getItem(
     AuthCacheKeys.ClientCredentials,
