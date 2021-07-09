@@ -56,7 +56,7 @@ export class MastodonApi {
     this.authCode = authCode;
   }
 
-  private getAuthCode = () => {
+  getAuthCode = (): string | void => {
     try {
       const authCode = ApiCacheStore.authCode;
       return authCode;
@@ -70,7 +70,7 @@ export class MastodonApi {
     }
   };
 
-  private getAccessToken = async () => {
+  getAccessToken = async (): Promise<string> => {
     try {
       const accessToken = ApiCacheStore.accessToken;
       return accessToken;
@@ -89,12 +89,16 @@ export class MastodonApi {
 
       const { access_token } = response.data;
 
-      // Save credentials to local storage
-      ApiCacheStore.accessToken = access_token;
-
       return access_token;
     }
   };
+
+  setAccessToken(accessToken: string): void {
+    // Save credentials to local storage
+    ApiCacheStore.accessToken = accessToken;
+
+    this.authCode = accessToken;
+  }
 }
 
 class ApiCacheStore {
