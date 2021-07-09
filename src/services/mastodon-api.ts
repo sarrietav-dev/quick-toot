@@ -12,7 +12,7 @@ export class MastodonApi {
   private accessToken = '';
 
   private fetchData = async () => {
-    const instance = ApiCacheStore.getInstanceName();
+    const instance = ApiCacheStore.instanceName;
     this.instanceApiUrl = `https://${instance}`;
     this.clientCredentials = await this.getClientCredentials();
     this.authCode = this.getAuthCode() ?? '';
@@ -21,7 +21,7 @@ export class MastodonApi {
 
   private getClientCredentials = async (): Promise<ClientCredentials> => {
     try {
-      const clientCredentials = ApiCacheStore.getClientCredentials();
+      const clientCredentials = ApiCacheStore.clientCredentials;
       return clientCredentials;
     } catch (error) {
       const response = await axios.post<MastodonApplication>(
@@ -47,7 +47,7 @@ export class MastodonApi {
 
   private getAuthCode = () => {
     try {
-      const authCode = ApiCacheStore.getAuthCode();
+      const authCode = ApiCacheStore.authCode;
       return authCode;
     } catch (error) {
       axios.post<string>(`${this.instanceApiUrl}/oauth/authorize`, {
@@ -61,7 +61,7 @@ export class MastodonApi {
 
   private getAccessToken = async () => {
     try {
-      const accessToken = ApiCacheStore.getAccessToken();
+      const accessToken = ApiCacheStore.accessToken;
       return accessToken;
     } catch (error) {
       const response = await axios.post<MastodonTokenResponse>(
@@ -82,14 +82,14 @@ export class MastodonApi {
 }
 
 class ApiCacheStore {
-  static getInstanceName() {
+  static get instanceName() {
     const instanceName = localStorage.getItem(AuthCacheKeys.InstanceName);
     // TODO: Make this error more specific.
     if (instanceName === null) throw Error();
     return instanceName;
   }
 
-  static getClientCredentials(): ClientCredentials {
+  static get clientCredentials(): ClientCredentials {
     const jsonable = localStorage.getItem(AuthCacheKeys.ClientCredentials);
     // TODO: Make this error more specific.
     if (jsonable === null) throw Error();
@@ -98,14 +98,14 @@ class ApiCacheStore {
     return clientCredentials;
   }
 
-  static getAuthCode() {
+  static get authCode() {
     const authCode = localStorage.getItem(AuthCacheKeys.AuthCode);
     // TODO: Make this error more specific.
     if (authCode === null) throw Error();
     return authCode;
   }
 
-  static getAccessToken() {
+  static get accessToken() {
     const accessToken = localStorage.getItem(AuthCacheKeys.AccessToken);
     // TODO: Make this error more specific.
     if (accessToken === null) throw Error();
