@@ -1,11 +1,11 @@
-import { ClientCredentials, AuthCacheKeys } from './../../types/types.d';
+import { ClientCredentials, ApiCacheKeys } from './../../types/types.d';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const createMastodonApp = createAsyncThunk(
   'credentials/createMastodonApp',
   async (instance: string) => {
     const stringifiedCredential = localStorage.getItem(
-      AuthCacheKeys.ClientCredentials,
+      ApiCacheKeys.ClientCredentials,
     );
     if (stringifiedCredential !== null) {
       const { client_id, client_name, client_secret } = JSON.parse(

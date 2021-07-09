@@ -1,8 +1,8 @@
-import { AuthCacheKeys, ClientCredentials } from '../types/types.d';
+import { ApiCacheKeys, ClientCredentials } from '../types/types.d';
 
 export const checkAppCreated = (): boolean => {
   const clientCredentials = localStorage.getItem(
-    AuthCacheKeys.ClientCredentials,
+    ApiCacheKeys.ClientCredentials,
   );
   if (clientCredentials === null) return false;
 
@@ -14,13 +14,13 @@ export const checkAppCreated = (): boolean => {
 };
 
 export const checkUserAuthenticated = (): boolean => {
-  const authKey = localStorage.getItem(AuthCacheKeys.AuthCode);
+  const authKey = localStorage.getItem(ApiCacheKeys.AuthCode);
 
   return authKey !== null;
 };
 
 export const checkUserToken = (): boolean => {
-  const accessToken = localStorage.getItem(AuthCacheKeys.AccessToken);
+  const accessToken = localStorage.getItem(ApiCacheKeys.AccessToken);
 
   return accessToken !== null;
 };

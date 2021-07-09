@@ -1,4 +1,4 @@
-import { AuthCacheKeys, ClientCredentials } from './../types/types.d';
+import { ApiCacheKeys, ClientCredentials } from './../types/types.d';
 import {
   MastodonTokenResponse,
   MastodonApplication,
@@ -99,18 +99,18 @@ export class MastodonApi {
 
 class ApiCacheStore {
   static get instanceName() {
-    const instanceName = localStorage.getItem(AuthCacheKeys.InstanceName);
+    const instanceName = localStorage.getItem(ApiCacheKeys.InstanceName);
     // TODO: Make this error more specific.
     if (instanceName === null) throw Error();
     return instanceName;
   }
 
   static set instanceName(v: string) {
-    localStorage.setItem(AuthCacheKeys.InstanceName, v);
+    localStorage.setItem(ApiCacheKeys.InstanceName, v);
   }
 
   static get clientCredentials(): ClientCredentials {
-    const jsonable = localStorage.getItem(AuthCacheKeys.ClientCredentials);
+    const jsonable = localStorage.getItem(ApiCacheKeys.ClientCredentials);
     // TODO: Make this error more specific.
     if (jsonable === null) throw Error();
 
@@ -119,28 +119,28 @@ class ApiCacheStore {
   }
 
   static set clientCredentials(v: ClientCredentials) {
-    localStorage.setItem(AuthCacheKeys.ClientCredentials, JSON.stringify(v));
+    localStorage.setItem(ApiCacheKeys.ClientCredentials, JSON.stringify(v));
   }
 
   static get authCode() {
-    const authCode = localStorage.getItem(AuthCacheKeys.AuthCode);
+    const authCode = localStorage.getItem(ApiCacheKeys.AuthCode);
     // TODO: Make this error more specific.
     if (authCode === null) throw Error();
     return authCode;
   }
 
   static set authCode(v: string) {
-    localStorage.setItem(AuthCacheKeys.AuthCode, v);
+    localStorage.setItem(ApiCacheKeys.AuthCode, v);
   }
 
   static get accessToken() {
-    const accessToken = localStorage.getItem(AuthCacheKeys.AccessToken);
+    const accessToken = localStorage.getItem(ApiCacheKeys.AccessToken);
     // TODO: Make this error more specific.
     if (accessToken === null) throw Error();
     return accessToken;
   }
 
   static set accessToken(v: string) {
-    localStorage.setItem(AuthCacheKeys.AccessToken, v);
+    localStorage.setItem(ApiCacheKeys.AccessToken, v);
   }
 }

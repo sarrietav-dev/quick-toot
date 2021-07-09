@@ -1,4 +1,4 @@
-import { AuthCacheKeys } from './../../types/types.d';
+import { ApiCacheKeys } from './../../types/types.d';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   authorizeUser,
@@ -43,7 +43,7 @@ const CredentialsSlice = createSlice({
     setAuthCode(state, action: PayloadAction<string>) {
       state.authorizationCode = action.payload;
 
-      localStorage.setItem(AuthCacheKeys.AuthCode, state.authorizationCode);
+      localStorage.setItem(ApiCacheKeys.AuthCode, state.authorizationCode);
     },
     setAccessToken(state, action: PayloadAction<string>) {
       state.accessToken = action.payload;
@@ -61,27 +61,27 @@ const CredentialsSlice = createSlice({
         state.clientCredentials.clientSecret = client_secret;
         state.instanceName = instance;
 
-        localStorage.setItem(AuthCacheKeys.InstanceName, instance);
+        localStorage.setItem(ApiCacheKeys.InstanceName, instance);
         localStorage.setItem(
-          AuthCacheKeys.ClientCredentials,
+          ApiCacheKeys.ClientCredentials,
           JSON.stringify({ client_name, client_id, client_secret }),
         );
       })
       .addCase(authorizeUser.fulfilled, (state, action) => {
         state.authorizationCode = action.payload.code;
 
-        localStorage.setItem(AuthCacheKeys.AuthCode, state.authorizationCode);
+        localStorage.setItem(ApiCacheKeys.AuthCode, state.authorizationCode);
       })
       .addCase(obtainToken.fulfilled, (state, action) => {
         state.accessToken = action.payload.access_token;
 
-        localStorage.setItem(AuthCacheKeys.AccessToken, state.accessToken);
+        localStorage.setItem(ApiCacheKeys.AccessToken, state.accessToken);
       })
       .addCase(revokeToken.fulfilled, (state) => {
         state.authorizationCode = '';
         state.accessToken = '';
 
-        localStorage.removeItem(AuthCacheKeys.AccessToken);
+        localStorage.removeItem(ApiCacheKeys.AccessToken);
       });
   },
 });

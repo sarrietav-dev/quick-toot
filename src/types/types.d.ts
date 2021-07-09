@@ -4,7 +4,7 @@ export interface ClientCredentials {
 	client_secret: string;
 }
 
-export enum AuthCacheKeys {
+export enum ApiCacheKeys {
   ClientCredentials = 'client_credentials',
   AuthCode = 'auth_code',
   AccessToken = 'access_token',
