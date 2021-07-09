@@ -6,14 +6,31 @@ import {
 import axios from 'axios';
 
 export class MastodonApi {
+  private static instance: MastodonApi;
   private instanceApiUrl = '';
   private clientCredentials!: ClientCredentials;
   private authCode = '';
   private accessToken = '';
 
-  private fetchData = async () => {
-    const instance = ApiCacheStore.instanceName;
+  private constructor(instanceName?: string) {
+    let instance;
+    if (instanceName) {
+      instance = instanceName;
+    } else {
+      // TODO: Throw error if instanceName is not passed.
+      instance = ApiCacheStore.instanceName;
+    }
+
     this.instanceApiUrl = `https://${instance}`;
+    this.fetchData();
+  }
+
+  static getInstance(instanceName?: string): MastodonApi {
+    if (this.instance === null) this.instance = new MastodonApi(instanceName);
+    return this.instance;
+  }
+
+  private fetchData = async () => {
     this.clientCredentials = await this.getClientCredentials();
     this.authCode = this.getAuthCode() ?? '';
     if (this.authCode !== '') this.accessToken = await this.getAccessToken();
