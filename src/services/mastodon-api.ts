@@ -116,18 +116,21 @@ export class MastodonApi {
 
     this.authCode = accessToken;
   }
+
+  logout = (): void => ApiCacheStore.logout();
 }
 
 class ApiCacheStore {
-  static get instanceName() {
+  static get instanceName(): string {
     const instanceName = localStorage.getItem(ApiCacheKeys.InstanceName);
     // TODO: Make this error more specific.
     if (instanceName === null) throw Error();
     return instanceName;
   }
 
-  static set instanceName(v: string) {
-    localStorage.setItem(ApiCacheKeys.InstanceName, v);
+  static set instanceName(v: string | null) {
+    if (v) localStorage.setItem(ApiCacheKeys.InstanceName, v);
+    else localStorage.removeItem(ApiCacheKeys.InstanceName);
   }
 
   static get clientCredentials(): ClientCredentials {
@@ -139,29 +142,40 @@ class ApiCacheStore {
     return clientCredentials;
   }
 
-  static set clientCredentials(v: ClientCredentials) {
-    localStorage.setItem(ApiCacheKeys.ClientCredentials, JSON.stringify(v));
+  static set clientCredentials(v: ClientCredentials | null) {
+    if (v)
+      localStorage.setItem(ApiCacheKeys.ClientCredentials, JSON.stringify(v));
+    else localStorage.removeItem(ApiCacheKeys.ClientCredentials);
   }
 
-  static get authCode() {
+  static get authCode(): string {
     const authCode = localStorage.getItem(ApiCacheKeys.AuthCode);
     // TODO: Make this error more specific.
     if (authCode === null) throw Error();
     return authCode;
   }
 
-  static set authCode(v: string) {
-    localStorage.setItem(ApiCacheKeys.AuthCode, v);
+  static set authCode(v: string | null) {
+    if (v) localStorage.setItem(ApiCacheKeys.AuthCode, v);
+    else localStorage.removeItem(ApiCacheKeys.AuthCode);
   }
 
-  static get accessToken() {
+  static get accessToken(): string {
     const accessToken = localStorage.getItem(ApiCacheKeys.AccessToken);
     // TODO: Make this error more specific.
     if (accessToken === null) throw Error();
     return accessToken;
   }
 
-  static set accessToken(v: string) {
-    localStorage.setItem(ApiCacheKeys.AccessToken, v);
+  static set accessToken(v: string | null) {
+    if (v) localStorage.setItem(ApiCacheKeys.AccessToken, v);
+    else localStorage.removeItem(ApiCacheKeys.AccessToken);
+  }
+
+  static logout() {
+    this.accessToken = null;
+    this.authCode = null;
+    this.clientCredentials = null;
+    this.instanceName = null;
   }
 }
