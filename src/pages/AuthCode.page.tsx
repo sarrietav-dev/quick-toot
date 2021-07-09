@@ -23,8 +23,7 @@ export const AuthCode = (): JSX.Element => {
   // TODO: Validate the auth code by sending the token request.
   const onSubmit = handleSubmit((data) => {
     dispatch(setAuthCode(data.authCode));
-    dispatch(obtainToken());
-    history.replace('/');
+    dispatch(obtainToken()).then(() => history.replace('/'));
   });
 
   return (

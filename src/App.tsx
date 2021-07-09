@@ -4,11 +4,9 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  useHistory,
   Redirect,
 } from 'react-router-dom';
 import { InstanceNamePage } from './pages/InstanceName.page';
-import { ProtectedRoute } from './components/ProtectedRoute';
 import {
   checkAppCreated,
   checkUserAuthenticated,
