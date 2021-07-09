@@ -89,6 +89,10 @@ class ApiCacheStore {
     return instanceName;
   }
 
+  static set instanceName(v: string) {
+    localStorage.setItem(AuthCacheKeys.InstanceName, v);
+  }
+
   static get clientCredentials(): ClientCredentials {
     const jsonable = localStorage.getItem(AuthCacheKeys.ClientCredentials);
     // TODO: Make this error more specific.
@@ -98,6 +102,10 @@ class ApiCacheStore {
     return clientCredentials;
   }
 
+  static set clientCredentials(v: ClientCredentials) {
+    localStorage.setItem(AuthCacheKeys.ClientCredentials, JSON.stringify(v));
+  }
+
   static get authCode() {
     const authCode = localStorage.getItem(AuthCacheKeys.AuthCode);
     // TODO: Make this error more specific.
@@ -105,10 +113,18 @@ class ApiCacheStore {
     return authCode;
   }
 
+  static set authCode(v: string) {
+    localStorage.setItem(AuthCacheKeys.AuthCode, v);
+  }
+
   static get accessToken() {
     const accessToken = localStorage.getItem(AuthCacheKeys.AccessToken);
     // TODO: Make this error more specific.
     if (accessToken === null) throw Error();
     return accessToken;
+  }
+
+  static set accessToken(v: string) {
+    localStorage.setItem(AuthCacheKeys.AccessToken, v);
   }
 }
