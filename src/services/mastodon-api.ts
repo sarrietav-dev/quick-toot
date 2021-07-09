@@ -41,6 +41,10 @@ export class MastodonApi {
     }
   };
 
+  setAuthCode(authCode: string): void {
+    this.authCode = authCode;
+  }
+
   private getAuthCode = () => {
     try {
       const authCode = ApiCacheStore.getAuthCode();
