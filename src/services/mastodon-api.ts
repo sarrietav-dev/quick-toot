@@ -21,6 +21,7 @@ export class MastodonApi {
     let instance;
     if (instanceName) {
       instance = instanceName;
+      ApiCacheStore.instanceName = instanceName;
     } else {
       // TODO: Throw error if instanceName is not passed.
       instance = ApiCacheStore.instanceName;
@@ -30,31 +31,22 @@ export class MastodonApi {
 
     if (checkAppCreated()) {
       this.clientCredentials = ApiCacheStore.clientCredentials;
-    } else {
-      this.getClientCredentials().then((clientCredentials) => {
-        this.clientCredentials = clientCredentials;
-        ApiCacheStore.clientCredentials = clientCredentials;
-      });
     }
 
     if (checkUserAuthenticated()) {
       this.authCode = ApiCacheStore.authCode;
       if (checkUserToken()) {
         this.accessToken = ApiCacheStore.accessToken;
-      } else {
-        this.getAccessToken().then((accessToken) =>
-          this.setAccessToken(accessToken),
-        );
       }
     }
   }
 
   static getInstance(instanceName?: string): MastodonApi {
-    if (this.instance === null) this.instance = new MastodonApi(instanceName);
+    if (!this.instance) this.instance = new MastodonApi(instanceName);
     return this.instance;
   }
 
-  private getClientCredentials = async (): Promise<ClientCredentials> => {
+  getClientCredentials = async (): Promise<ClientCredentials> => {
     const response = await axios.post<MastodonApplication>(
       `${this.instanceApiUrl}/api/v1/apps`,
       {
@@ -79,6 +71,11 @@ export class MastodonApi {
     };
   };
 
+  setClientCredentials(clientCredentials: ClientCredentials): void {
+    ApiCacheStore.clientCredentials = clientCredentials;
+    this.clientCredentials = clientCredentials;
+  }
+
   setAuthCode(authCode: string): void {
     // Save credentials to local storage
     ApiCacheStore.authCode = authCode;
@@ -86,15 +83,9 @@ export class MastodonApi {
     this.authCode = authCode;
   }
 
-  getAuthCode = async (): Promise<AxiosResponse<void>> => {
-    const response = axios.post(`${this.instanceApiUrl}/oauth/authorize`, {
-      response_type: 'code',
-      client_id: this.clientCredentials.client_id,
-      redirect_uri: 'urn:ietf:wg:oauth:2.0:oob',
-    });
-    return response;
-    // TODO: Handle errors
-  };
+  // This exist because a normal http response, at this specific endpoint doesn't seem to work.
+  getAuthCodeUrl = () =>
+    `${this.instanceApiUrl}/oauth/authorize?response_type=code&client_id=${this.clientCredentials.client_id}&redirect_uri=urn:ietf:wg:oauth:2.0:oob&scope=read+write`;
 
   getAccessToken = async (): Promise<string> => {
     const response = await axios.post<MastodonTokenResponse>(

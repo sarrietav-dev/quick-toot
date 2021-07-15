@@ -1,8 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { useAppDispatch } from '../store/hooks';
-import { createMastodonApp } from '../store/reducers/credentials.thunks';
 import { useForm } from 'react-hook-form';
 import {
   Wrapper,
@@ -10,21 +8,24 @@ import {
   HighlightedFormBox,
   Input,
 } from './styled/Auth.styled';
+import { MastodonApi } from '../services/mastodon-api';
 
 interface FormData {
   instance: string;
 }
 
 export const InstanceNamePage = (): JSX.Element => {
-  const dispatch = useAppDispatch();
   const history = useHistory();
   const { register, handleSubmit } = useForm<FormData>();
 
   // TODO: Validate instance name is correct sending the auth request.
   const onSubmit = handleSubmit((data) => {
-    dispatch(createMastodonApp(data.instance)).then(() =>
-      history.replace('/auth-code'),
-    );
+    const api = MastodonApi.getInstance(data.instance);
+    api.getClientCredentials().then((value) => {
+      api.setClientCredentials(value);
+
+      history.replace('/auth-code');
+    });
   });
 
   return (
