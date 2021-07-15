@@ -1,3 +1,5 @@
+import { StringMappingType } from 'typescript';
+
 export interface MastodonApplication {
   id?: string;
   name: string;
@@ -16,4 +18,9 @@ export interface MastodonTokenResponse {
   created_at: number;
   error?: string;
   error_description?: string;
+}
+
+export interface MastodonStatus {
+  status: string;
+  spoiler_text: string;
 }

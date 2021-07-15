@@ -7,6 +7,7 @@ import { ApiCacheKeys, ClientCredentials } from './../types/types.d';
 import {
   MastodonTokenResponse,
   MastodonApplication,
+  MastodonStatus,
 } from './../types/mastodon-api-types.d';
 import axios, { AxiosResponse } from 'axios';
 
@@ -84,7 +85,7 @@ export class MastodonApi {
   }
 
   // This exist because a normal http response, at this specific endpoint doesn't seem to work.
-  getAuthCodeUrl = () =>
+  getAuthCodeUrl = (): string =>
     `${this.instanceApiUrl}/oauth/authorize?response_type=code&client_id=${this.clientCredentials.client_id}&redirect_uri=urn:ietf:wg:oauth:2.0:oob&scope=read+write`;
 
   getAccessToken = async (): Promise<string> => {
@@ -111,6 +112,19 @@ export class MastodonApi {
 
     this.authCode = accessToken;
   }
+
+  postStatus = async (status: MastodonStatus): Promise<AxiosResponse> => {
+    const response = await axios.post(
+      `${this.instanceApiUrl}/api/v1/statuses`,
+      status,
+      {
+        headers: {
+          Authorization: this.accessToken,
+        },
+      },
+    );
+    return response;
+  };
 
   logout = (): void => ApiCacheStore.logout();
 }
