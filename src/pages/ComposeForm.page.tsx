@@ -5,6 +5,7 @@ import { ContentWarningBox } from '../components/form/ContentWarningBox';
 import { FormButtons } from '../components/form/FormButtons';
 import { SubmitButton } from '../components/form/SubmitButton';
 import { TextBox } from '../components/form/TextBox';
+import { MastodonApi } from '../services/mastodon-api';
 import { Form, ToolBoxWrapper } from './styled/ComposeForm.styled';
 
 export interface FormData {
@@ -22,7 +23,12 @@ export const FormContext = createContext<ContextType | undefined>(undefined);
 export const ComposeForm = (): JSX.Element => {
   const { control, handleSubmit, register } = useForm<FormData>();
 
-  const onSubmit = handleSubmit((data) => console.log(data));
+  const onSubmit = handleSubmit((data) => {
+    const api = MastodonApi.getInstance();
+    api
+      .postStatus({ status: data.status, spoiler_text: data.spoilerText })
+      .then(() => window.close());
+  });
 
   return (
     <FormContext.Provider value={{ control, register }}>

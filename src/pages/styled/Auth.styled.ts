@@ -1,7 +1,7 @@
-import styled from "styled-components";
-import { PrimaryButton } from "../../components/abstract-styled/buttons";
+import styled from 'styled-components';
+import { PrimaryButton } from '../../components/abstract-styled/buttons';
 
-export const AuthWrapper = styled.div`
+export const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -22,6 +22,16 @@ export const HighlightedFormBox = styled.form`
 
   h2 {
     color: ${(props) => props.theme.colors.classicSecondaryColor};
+  }
+
+  a:link,
+  a:visited {
+    color: ${(props) => props.theme.colors.primary};
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 `;
 

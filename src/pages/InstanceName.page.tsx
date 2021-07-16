@@ -1,41 +1,35 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { useAppDispatch } from '../store/hooks';
-import {
-  authorizeUser,
-  createMastodonApp,
-  obtainToken,
-} from '../store/reducers/credentials.reducer';
 import { useForm } from 'react-hook-form';
 import {
-  AuthWrapper,
+  Wrapper,
   AuthButton,
   HighlightedFormBox,
   Input,
 } from './styled/Auth.styled';
+import { MastodonApi } from '../services/mastodon-api';
 
 interface FormData {
   instance: string;
 }
 
-export const Auth = (): JSX.Element => {
-  const dispatch = useAppDispatch();
+export const InstanceNamePage = (): JSX.Element => {
   const history = useHistory();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>();
+  const { register, handleSubmit } = useForm<FormData>();
 
-  const onSubmit = handleSubmit(async (data) => {
-    await dispatch(createMastodonApp(data.instance));
-    await dispatch(obtainToken());
-    history.push('/');
+  // TODO: Validate instance name is correct sending the auth request.
+  const onSubmit = handleSubmit((data) => {
+    const api = MastodonApi.getInstance(data.instance);
+    api.getClientCredentials().then((value) => {
+      api.setClientCredentials(value);
+
+      history.replace('/auth-code');
+    });
   });
 
   return (
-    <AuthWrapper>
+    <Wrapper>
       <HighlightedFormBox onSubmit={onSubmit}>
         <h2>Please enter your instance address</h2>
         <Input
@@ -46,8 +40,8 @@ export const Auth = (): JSX.Element => {
           pattern=".+\..+"
           {...register('instance', { required: true, pattern: /.+\..+/ })}
         />
-        <AuthButton type="submit">Authorize</AuthButton>
+        <AuthButton type="submit">Next</AuthButton>
       </HighlightedFormBox>
-    </AuthWrapper>
+    </Wrapper>
   );
 };
