@@ -85,8 +85,18 @@ export class MastodonApi {
   }
 
   // This exist because a normal http response, at this specific endpoint doesn't seem to work.
+  //getAuthCodeUrl = (): string =>
+  //`${this.instanceApiUrl}/oauth/authorize?response_type=code&client_id=${this.clientCredentials.client_id}&redirect_uri=urn:ietf:wg:oauth:2.0:oob&scope=read+write`;
   getAuthCodeUrl = (): string =>
-    `${this.instanceApiUrl}/oauth/authorize?response_type=code&client_id=${this.clientCredentials.client_id}&redirect_uri=urn:ietf:wg:oauth:2.0:oob&scope=read+write`;
+    axios.getUri({
+      url: `${this.instanceApiUrl}/oauth/authorize`,
+      params: {
+        response_type: 'code',
+        client_id: this.clientCredentials.client_id,
+        redirect_uri: 'urn:ietf:wg:oauth:2.0:oob',
+        scopes: 'write:statuses read',
+      },
+    });
 
   getAccessToken = async (): Promise<string> => {
     const response = await axios.post<MastodonTokenResponse>(
@@ -126,7 +136,20 @@ export class MastodonApi {
     return response;
   };
 
-  logout = (): void => ApiCacheStore.logout();
+  revokeAcessToken = async (): Promise<AxiosResponse> => {
+    const response = await axios.post(`${this.instanceApiUrl}/oauth/revoke`, {
+      client_id: this.clientCredentials.client_id,
+      client_secret: this.clientCredentials.client_secret,
+      token: this.accessToken,
+    });
+    // TODO: Handle errors
+
+    return response;
+  };
+
+  logout = (): void => {
+    ApiCacheStore.logout();
+  };
 }
 
 class ApiCacheStore {

@@ -1,5 +1,3 @@
-import { StringMappingType } from 'typescript';
-
 export interface MastodonApplication {
   id?: string;
   name: string;
